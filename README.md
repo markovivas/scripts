@@ -19,6 +19,4 @@
 
  Este arquivo de texto contém uma lista de filtros estáticos para a extensão de bloqueio de anúncios **uBlock Origin**.
 
- **Propósito:** Os filtros são específicos para o `youtube.com` e têm como objetivo bloquear anúncios e pop-ups de detecção de bloqueadores de anúncios, melhorando a experiência de visualização na plataforma.
-
- Para utilizá-lo, copie o conteúdo e cole na seção "Meus filtros" nas configurações do uBlock Origin.
+ **Propósito:** Os filtros são específicos para o `youtube.com` e têm como objetivo bloquear anúncios e pop-ups de detecção de bloqueadores de anúncios, melhorando a experiência de visualização na plataforma
