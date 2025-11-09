@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Serviços Locais</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f2f6f9;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #004d73 0%, #006494 100%);
+      color: white;
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .header h1 {
+      font-size: 2.6rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      border-top: 5px solid #006494;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      color: #006494;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .card a {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #004d73;
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      text-align: center;
+      transition: color 0.2s;
+    }
+
+    .card a:hover {
+      color: #006494;
+    }
+
+    .description {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .status {
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    .online {
+      background-color: #2ecc71;
+      box-shadow: 0 2px 5px rgba(46, 204, 113, 0.3);
+    }
+
+    .offline {
+      background-color: #e74c3c;
+      box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3);
+    }
+
+    .footer {
+      background-color: #004d73;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        padding: 1rem;
+      }
+      .header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Painel de Serviços Locais</h1>
+    <p class="subtitle">Status em tempo real dos serviços hospedados na sua rede</p>
+  </div>
+
+  <div class="container" id="services"></div>
+
+  <div class="footer">
+    <p>Painel de Serviços Locais • Atualizado em <span id="current-date"></span></p>
+  </div>
+
+  <script>
+    const services = [
+      { name: "Gitea", icon: "fab fa-git-alt", url: "http://192.168.2.100:3000", desc: "Hospede e gerencie seus repositórios Git com interface leve" },
+      { name: "Jellyfin", icon: "fas fa-film", url: "http://192.168.2.100:8096", desc: "Servidor de mídia pessoal para filmes, séries e músicas" },
+      { name: "MeTube", icon: "fab fa-youtube", url: "http://192.168.2.100:8081", desc: "Baixe vídeos de diversas plataformas" },
+      { name: "Minecraft Server", icon: "fas fa-cube", url: "http://192.168.2.100:25565", desc: "Servidor de Minecraft local"},
+      { name: "Navidrome", icon: "fas fa-music", url: "http://192.168.2.100:4533", desc: "Servidor de música pessoal compatível com Subsonic" },
+      { name: "Nextcloud", icon: "fas fa-cloud", url: "http://192.168.2.100:8083", desc: "Nuvem pessoal para armazenamento e colaboração" },
+      { name: "Nginx Proxy Manager", icon: "fas fa-server", url: "http://192.168.2.100:81/settings", desc: "Gerencie proxies reversos e certificados SSL" },
+      { name: "OnlyOffice", icon: "fas fa-file-alt", url: "http://192.168.2.100:8084", desc: "Suite de escritório online colaborativa" },
+      { name: "PhotoPrism", icon: "fas fa-camera", url: "http://192.168.2.100:2342", desc: "Galeria inteligente para suas fotos" },
+      { name: "Planka", icon: "fas fa-list-check", url: "http://192.168.2.100:4000", desc: "Gerencie seus projetos e tarefas com quadros Kanban colaborativos" },
+      { name: "Wallos", icon: "fas fa-wallet", url: "http://192.168.2.100:8282", desc: "Acompanhe e gerencie suas assinaturas" },
+      { name: "WordPress", icon: "fab fa-wordpress", url: "http://192.168.2.100:8080", desc: "Criação e gerenciamento de sites e blogs" }
+    ];
+
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString("pt-BR");
+
+    async function checkStatus(service, element) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+
+      try {
+        await fetch(service.url, { method: "HEAD", mode: "no-cors", signal: controller.signal });
+        clearTimeout(timeout);
+        setStatus(element, true);
+      } catch {
+        clearTimeout(timeout);
+        setStatus(element, false);
+      }
+    }
+
+    function setStatus(card, isOnline) {
+      const statusEl = card.querySelector(".status");
+      statusEl.textContent = isOnline ? "Online" : "Offline";
+      statusEl.className = `status ${isOnline ? "online" : "offline"}`;
+    }
+
+    const container = document.getElementById("services");
+    services.forEach(svc => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-icon"><i class="${svc.icon}"></i></div>
+        <a href="${svc.url}" target="_blank">${svc.name}</a>
+        <div class="description">${svc.desc}</div>
+        <div class="card-footer"><span class="status">Verificando...</span></div>
+      `;
+      container.appendChild(card);
+      checkStatus(svc, card);
+      setInterval(() => checkStatus(svc, card), 60000);
+    });
+
+    container.addEventListener("click", e => {
+      const card = e.target.closest(".card");
+      if (card && !e.target.closest("a")) {
+        const link = card.querySelector("a");
+        if (link) window.open(link.href, "_blank");
+      }
+    });
+  </script>
+</body>
+</html>

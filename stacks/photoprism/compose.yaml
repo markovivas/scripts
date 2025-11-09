@@ -1,0 +1,25 @@
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: unless-stopped
+    ports:
+      - "2342:2342" # porta principal (interface web)
+    environment:
+      PHOTOPRISM_ADMIN_USER: admin
+      PHOTOPRISM_ADMIN_PASSWORD: admin123     # altere esta senha!
+      PHOTOPRISM_SITE_URL: "http://localhost:2342/"
+      PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
+      PHOTOPRISM_STORAGE_PATH: /photoprism/storage
+      PHOTOPRISM_UPLOAD_NSFW: "false"         # evita uploads NSFW
+      PHOTOPRISM_LOG_LEVEL: info
+      PHOTOPRISM_HTTP_COMPRESSION: "gzip"
+      PHOTOPRISM_READONLY: "false"
+      TZ: America/Sao_Paulo
+    volumes:
+      - /home/markovivas/dockge/photoprism/originals:/photoprism/originals
+      - /home/markovivas/dockge/photoprism/storage:/photoprism/storage
+    # Habilite aceleração de hardware (opcional, ex. Intel/NVIDIA)
+    # devices:
+    #   - /dev/dri:/dev/dri
+    pull_policy: always

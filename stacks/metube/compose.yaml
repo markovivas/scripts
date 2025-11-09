@@ -1,0 +1,14 @@
+services:
+  metube:
+    image: alexta69/metube:latest
+    container_name: metube
+    volumes:
+      - /home/markovivas/dockge/metube/downloads:/downloads
+      - /home/markovivas/dockge/metube/audio-downloads:/audio-downloads
+    environment:
+      - UID=1000
+      - GID=1000
+      - TZ=America/Sao_Paulo
+    ports:
+      - "8081:8081"
+    restart: unless-stopped

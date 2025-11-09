@@ -1,0 +1,36 @@
+services:
+  wordpress_db:
+    image: mariadb:latest
+    container_name: wordpress_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - /home/markovivas/dockge/wordpress/data/mariadb:/var/lib/mysql
+    networks:
+      - wordpress_network
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+  wordpress_app:
+    depends_on:
+      - wordpress_db
+    image: wordpress:latest
+    container_name: wordpress_app
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - /home/markovivas/dockge/wordpress/data/wordpress:/var/www/html
+    ports:
+      - 8080:80
+    networks:
+      - wordpress_network
+    restart: unless-stopped
+networks:
+  wordpress_network:
+    driver: bridge

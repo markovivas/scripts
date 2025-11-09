@@ -1,0 +1,22 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "8096:8096"      # Porta principal da interface web
+      # - "8920:8920"    # (opcional) HTTPS direto
+    environment:
+      - TZ=America/Sao_Paulo
+      # - JELLYFIN_PublishedServerUrl=http://seu_dominio_ou_ip  # opcional
+    volumes:
+      - /home/markovivas/dockge/jellyfin/config:/config
+      - /home/markovivas/dockge/jellyfin/cache:/cache
+      - /home/markovivas/dockge/jellyfin/media:/media
+
+    # Habilita aceleração de hardware (opcional)
+    # Uncomment se usar Intel QuickSync, NVIDIA, etc.
+    # devices:
+    #   - /dev/dri:/dev/dri
+
+    pull_policy: always

@@ -1,0 +1,33 @@
+services:
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    volumes:
+      - /home/markovivas/dockge/nextcloud/data/nextcloud:/var/www/html
+    ports:
+      - "8083:80"
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      # Usuário do banco de dados: nextcloud_user
+      MYSQL_USER: nextcloud_user
+      # Senha do banco de dados: sua_senha_segura
+      MYSQL_PASSWORD: sua_senha_segura
+      # Nome do banco de dados: nextcloud
+      MYSQL_DATABASE: nextcloud
+      # Host do banco de dados: mysql:3306
+      MYSQL_HOST: mysql
+
+  mysql:
+    image: mariadb:latest
+    container_name: nextcloud_mysql
+    restart: unless-stopped
+    volumes:
+      - /home/markovivas/dockge/nextcloud/data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: senha_root_segura
+      MYSQL_USER: nextcloud_user
+      MYSQL_PASSWORD: sua_senha_segura
+      MYSQL_DATABASE: nextcloud
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --innodb-read-only-compressed=OFF

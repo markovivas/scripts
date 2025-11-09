@@ -1,0 +1,16 @@
+services:
+  wallos:
+    image: bellamy/wallos:latest
+    container_name: wallos
+    restart: unless-stopped
+    ports:
+      - "8282:80"  # Porta acessível no navegador (pode alterar se quiser)
+    volumes:
+      - /home/markovivas/dockge/wallos/db:/var/www/html/db
+      - /home/markovivas/dockge/wallos/logos:/var/www/html/images/uploads/logos
+    environment:
+      - TZ=America/Sao_Paulo
+      # Opcional: definir variáveis adicionais se quiser configurar email ou outros recursos
+
+    # Caso queira atualizar automaticamente a imagem ao reiniciar
+    pull_policy: always

@@ -1,0 +1,9 @@
+services:
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    volumes:
+      - /home/markovivas/dockge/onlyoffice/data/onlyoffice:/var/www/onlyoffice/Data
+    ports:
+      - "8084:80"
+    restart: unless-stopped
