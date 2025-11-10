@@ -79,10 +79,11 @@ choco install imageresizerapp -y
 choco install gcompris -y
 choco install haroopad -y
 choco install itunes -y
+choco install ffmpeg-full -y
 
 :: ================== GAMES ==================
-choco install steam -y
-choco install epicgameslauncher -y
+:: choco install steam -y
+:: choco install epicgameslauncher -y
 choco install valorant -y
 
 echo.
