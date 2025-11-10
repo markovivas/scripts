@@ -80,6 +80,7 @@ choco install gcompris -y
 choco install haroopad -y
 choco install itunes -y
 choco install ffmpeg-full -y
+choco install yt-dlp --pre -y
 
 :: ================== GAMES ==================
 :: choco install steam -y
