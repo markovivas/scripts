@@ -7,7 +7,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_HOST_AUTH_METHOD=${POSTGRES_HOST_AUTH_METHOD}
     volumes:
-      - ./data/db-data:/var/lib/postgresql/data
+      - /home/markovivas/dockge/planka/data/db-data:/var/lib/postgresql/data
     healthcheck:
       test:
         - CMD-SHELL
@@ -33,12 +33,11 @@ services:
       - DEFAULT_ADMIN_NAME=${DEFAULT_ADMIN_NAME}
       - DEFAULT_ADMIN_USERNAME=${DEFAULT_ADMIN_USERNAME}
     volumes:
-      - ./data/user-avatars:/app/public/user-avatars
-      - ./data/project-background-images:/app/public/project-background-images
-      - ./data/attachments:/app/private/attachments
-      - ./data/planka-data:/opt/planka
+      - /home/markovivas/dockge/planka/data/user-avatars:/app/public/user-avatars
+      - /home/markovivas/dockge/planka/data/project-background-images:/app/public/project-background-images
+      - /home/markovivas/dockge/planka/data/attachments:/app/private/attachments
+      - /home/markovivas/dockge/planka/data/planka-data:/opt/planka
 volumes:
-  # Declarados apenas para clareza (bind mounts estão sendo usados)
   user-avatars: null
   project-background-images: null
   attachments: null
