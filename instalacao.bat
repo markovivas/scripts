@@ -45,6 +45,7 @@ choco install composer -y
 choco install dbeaver -y
 choco install git -y
 choco install github-desktop -y
+choco install heidisql -y
 choco install nodejs.install -y
 choco install notepadplusplus.install -y
 choco install putty -y
