@@ -19,6 +19,7 @@ cat << EOF > "$WEB_DIR/index.html"
 <head>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="0; url=/cgi-bin/vm.sh">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Redirecionando</title>
 </head>
 <body>Redirecionando...</body>
@@ -69,58 +70,110 @@ cat << HTML
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f6f7;
-    margin:20px;
+    margin:10px;
 }
+
+h2{
+    margin-bottom:10px;
+}
+
 table{
     width:100%;
     border-collapse:collapse;
     background:#fff;
 }
+
 th{
     background:#e9ecef;
     text-align:left;
 }
+
 td,th{
     border:1px solid #ddd;
     padding:8px;
 }
+
 tr:nth-child(even){
     background:#f9f9f9;
 }
+
 .running{
     color:#2e7d32;
     font-weight:bold;
 }
+
 .halted{
     color:#c62828;
     font-weight:bold;
 }
+
 button{
-    padding:6px 12px;
-    margin:2px 0;
+    padding:8px 14px;
+    margin:4px 2px;
     border:none;
     background:#1976d2;
     color:#fff;
     cursor:pointer;
+    width:100%;
 }
-button:hover{
-    opacity:0.9;
-}
+
 form{
     display:inline;
 }
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 700px){
+
+    table, thead, tbody, th, td, tr{
+        display:block;
+    }
+
+    thead{
+        display:none;
+    }
+
+    tr{
+        background:#fff;
+        margin-bottom:12px;
+        border:1px solid #ddd;
+        padding:10px;
+    }
+
+    td{
+        border:none;
+        padding:6px 0;
+    }
+
+    td::before{
+        font-weight:bold;
+        display:block;
+        margin-bottom:2px;
+    }
+
+    td:nth-child(1)::before{ content:"VM"; }
+    td:nth-child(2)::before{ content:"Status"; }
+    td:nth-child(3)::before{ content:"Ações"; }
+
+    button{
+        width:100%;
+    }
+}
 </style>
+
 </head>
 <body>
 
 <h2>Controle de VMs - XCP-ng</h2>
 
 <table>
+<thead>
 <tr>
 <th>Nome</th>
 <th>Status</th>
 <th>Ações</th>
 </tr>
+</thead>
+<tbody>
 HTML
 
 xe_cmd vm-list is-control-domain=false is-a-template=false --minimal | tr ',' '\n' | while read uuid
@@ -156,6 +209,7 @@ do
 done
 
 cat << HTML
+</tbody>
 </table>
 
 <p>Atualização automática a cada 30 segundos</p>
